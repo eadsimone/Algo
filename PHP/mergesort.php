@@ -1,20 +1,12 @@
 <?php
-//Aux functions:slice and merge
-//slice_array:Create a new array from an exist array key $from to $to
-//function slice_array($arr,$from,$to){
-//    if($from>$to) return $arr;
-//    elseif($from==$to) return $arr[$from];
-//    if(!is_array($arr)||count($arr)==1) {return $arr;}
-//    else{
-//        $new=array();$a=$to-$from;
-//        for($i=0;$i<$a;$i++){
-//            $new[$i]=$arr[$from++];
-//        }
-//    }
-//
-//    return $new;
-//}
-//merge_array: create a new array from two exist arrays, order is $x, $y.
+/**
+ * Created by JetBrains PhpStorm.
+ * User: Ezequiel
+ * Date: 28/11/13
+ * Time: 12:29
+ * To change this template use File | Settings | File Templates.
+ */
+
 function merge_array($x,$y){
     $new=array();
     for($i=0;$i<count($x);$i++){
@@ -25,7 +17,7 @@ function merge_array($x,$y){
     }
     return $new;
 }
-//Main Script
+
 function MergeSort($a){
     if (count($a)>1){
         $cent=floor(count($a)/2);
@@ -56,7 +48,3 @@ function merge($b,$c,$a){
     }
     return merge_array($a,$xxx);
 }
-
-
-$A=array(10,58,5,33,78,12,1,5);
-print_r(MergeSort($A));
