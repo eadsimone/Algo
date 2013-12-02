@@ -1,0 +1,115 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: Ezequiel
+ * Date: 02/12/13
+ * Time: 16:31
+ * To change this template use File | Settings | File Templates.
+ */
+
+class Torta {
+    /**
+     * Created by JetBrains PhpStorm.
+     * User: Ezequiel
+     * Date: 02/12/13
+     * Time: 12:06
+     * To change this template use File | Settings | File Templates.
+     */
+
+    /*Se tiene un molde (con forma de tablero 3x3) y 10 unidades de distintos ingredientes (3 dulces, 3 frutas, 3 confites, 1 masita)
+    para hacer un pastel
+
+    Se considera que un pastel de 9 ingredientes es rico cuando 3 mismos ingredientes estan alineados verticalmente
+    u horizontlamnete en el molde. La masita es epsecial, puede alinearse con cualquier ingrediente.
+
+    Calcula la cantidad maxima de pasteles ricos distintos que pueden realiszarse.
+    */
+//    private $var;
+//
+//    function sayHello() {
+//        echo "Hello";
+//        $this->var = "World";
+//    }
+
+
+    private  $solucionh=null;
+    private  $molde=null;
+    private  $ingredientes=null;
+    private  $posible_sol_h=null;
+    private  $solucion_horizontal=null;
+
+    function __construct() {
+        $this->solucionh=[];
+        $this->molde = array(
+            array("empty00","empty01","empty02"),
+            array("empty10","empty11","empty12"),
+            array("empty20","empty21","empty22"));
+        $this->ingredientes=array();
+        $this->posible_sol_h=array();
+        $this->solucion_horizontal=array();
+    }
+
+
+    public function agregar_ing($ingre) {
+        $this->ingredientes[]=$ingre;
+    }
+
+    public function imprimir_ing() {
+        echo "<pre>";
+        print_r($this->ingredientes);
+        echo "</pre>";
+    }
+
+    public function agregar_ing_molde($f,$c,$ing) {
+
+
+        /** @var $molde array */
+        $this->molde[$f][$c]=$this->ingredientes[$ing];
+    }
+
+    public function solucion_horizontal($arr) {
+
+        //$array = array(1, "hello", 1, "world", "hello");
+        $ar_number_of_repetition=array_count_values($arr);
+        foreach ($ar_number_of_repetition as $value) {
+            if($value>1)
+                return false;
+        }
+        return true;
+    }
+
+    public function agregar_sol_hor($arr) {
+        $solucion_horizontal[]=$arr;
+    }
+
+
+
+    public function receta($f,$c,$ingre) {
+        for(;$f<3; $f++){
+            for(;$c<3; $c++){
+
+                $this->agregar_ing_molde($f,$c,$ingre);
+
+                $this->posible_sol_h[]=$this->ingredientes[$ingre];
+
+                $this->receta($f,$c+1,($ingre+1)+$c);
+            }
+
+            if ($this->solucion_horizontal($posible_sol_h)){
+                $this->agregar_sol_hor($posible_sol_h);
+            }
+        }
+    }
+
+}
+
+$torta = new Torta();
+
+echo $torta->agregar_ing("dulce");echo $torta->agregar_ing("fruta");echo $torta->agregar_ing("confites");
+echo $torta->agregar_ing("confites");echo $torta->agregar_ing("masita");echo $torta->agregar_ing("dulce");
+echo $torta->agregar_ing("dulce");echo $torta->agregar_ing("confites");echo $torta->agregar_ing("fruta");
+echo $torta->agregar_ing("fruta");
+
+$torta->imprimir_ing();
+
+$torta->receta(0,0,0);
